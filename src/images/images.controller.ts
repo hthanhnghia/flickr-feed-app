@@ -1,12 +1,12 @@
 import { Get, Controller } from '@nestjs/common';
-import { ImagesService } from './images.service';
+import { ImagesService, FeedResponse } from './images.service';
 
-@Controller()
+@Controller('images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
   @Get()
-  async fetchFeedImages(): Promise<string[]> {
+  async fetchFeedImages(): Promise<FeedResponse> {
     return this.imagesService.fetchFeedImages();
   }
 }

@@ -1,6 +1,6 @@
-import { Feed } from './images.service';
+import { ExternalFeedResponse, FeedResponse } from './images.service';
 
-export const MOCK_FLICKR_API_FEED_DATA: Feed = {
+export const MOCK_FLICKR_API_FEED_DATA: ExternalFeedResponse = {
   title: 'Uploads from everyone',
   link: 'https://www.flickr.com/photos/',
   description: '',
@@ -38,7 +38,28 @@ export const MOCK_FLICKR_API_FEED_DATA: Feed = {
   ],
 };
 
-export const MOCK_FETCH_IMAGE_LINKS_DATA: string[] = [
-  'https://live.staticflickr.com/65535/49612223243_4f9e63713f_m.jpg',
-  'https://live.staticflickr.com/65535/49612223293_fcbac4a882_m.jpg',
-];
+export const MOCK_FETCH_IMAGE_LINKS_DATA: FeedResponse = {
+  count: 2,
+  value: [
+    {
+      date_taken: '2020-03-03T14:24:48-08:00',
+      description:
+        ' <p><a href="https://www.flickr.com/people/158018632@N04/">dainguyen99999</a> posted a photo:</p> <p><a href="https://www.flickr.com/photos/158018632@N04/49612223243/" title=" "><img src="https://live.staticflickr.com/65535/49612223243_4f9e63713f_m.jpg" width="180" height="240" alt=" " /></a></p> ',
+      link: 'https://www.flickr.com/photos/158018632@N04/49612223243/',
+      media_url:
+        'https://live.staticflickr.com/65535/49612223243_4f9e63713f_m.jpg',
+      published: '2020-03-03T07:51:41Z',
+      title: ' ',
+    },
+    {
+      date_taken: '2020-02-29T16:09:50-08:00',
+      description:
+        ' <p><a href="https://www.flickr.com/people/185888701@N02/">florhorvat</a> posted a photo:</p> <p><a href="https://www.flickr.com/photos/185888701@N02/49612223293/" title="20200229_160950"><img src="https://live.staticflickr.com/65535/49612223293_fcbac4a882_m.jpg" width="240" height="180" alt="20200229_160950" /></a></p> ',
+      link: 'https://www.flickr.com/photos/185888701@N02/49612223293/',
+      media_url:
+        'https://live.staticflickr.com/65535/49612223293_fcbac4a882_m.jpg',
+      published: '2020-03-03T07:51:44Z',
+      title: '20200229_160950',
+    },
+  ],
+};
