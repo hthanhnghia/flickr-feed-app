@@ -36,12 +36,13 @@ export interface FeedResponseItem {
   date_taken: string;
   description: string;
   published: string;
+  tags: string;
 }
 
 @Injectable()
 export class ImagesService {
   constructor(private readonly httpService: HttpService) {}
-  private readonly imageFeedUrl =
+  private readonly IMAGE_FEED_URL: string =
     'https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1';
 
   // Get the list of image urls from the server returned Feed data
@@ -56,6 +57,7 @@ export class ImagesService {
           date_taken: item.date_taken,
           description: item.description,
           published: item.published,
+          tags: item.tags,
         };
         responseItems.push(responseItem);
       }
@@ -68,11 +70,14 @@ export class ImagesService {
   }
 
   // HTTP request to the Flickr server to fetch the image feed data
-  async fetchDataFromServer(): Promise<ExternalFeedResponse> {
+  async fetchDataFromServer(
+    searchParam: string,
+  ): Promise<ExternalFeedResponse> {
     try {
-      const response = await this.httpService
-        .get(this.imageFeedUrl)
-        .toPromise();
+      const url =
+        this.IMAGE_FEED_URL +
+        (searchParam && searchParam != '' ? `&tags=${searchParam}` : '');
+      const response = await this.httpService.get(url).toPromise();
       return response.data;
     } catch (error) {
       console.log('error', error);
@@ -80,10 +85,12 @@ export class ImagesService {
     return null;
   }
 
-  async fetchFeedImages(): Promise<FeedResponse> {
+  async fetchFeedImages(searchParam: string = ''): Promise<FeedResponse> {
     let response: FeedResponse = { count: 0, value: [] };
     try {
-      const feedDataJson: ExternalFeedResponse = await this.fetchDataFromServer();
+      const feedDataJson: ExternalFeedResponse = await this.fetchDataFromServer(
+        searchParam,
+      );
       if (feedDataJson) {
         response = this.getAllFeeds(feedDataJson);
       }

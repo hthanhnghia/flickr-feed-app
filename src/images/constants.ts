@@ -33,12 +33,12 @@ export const MOCK_FLICKR_API_FEED_DATA: ExternalFeedResponse = {
       published: '2020-03-03T07:51:44Z',
       author: 'nobody@flickr.com ("florhorvat")',
       author_id: '185888701@N02',
-      tags: '',
+      tags: 'testtag',
     },
   ],
 };
 
-export const MOCK_FETCH_IMAGE_LINKS_DATA: FeedResponse = {
+export const MOCK_FETCH_IMAGES_DATA: FeedResponse = {
   count: 2,
   value: [
     {
@@ -50,6 +50,7 @@ export const MOCK_FETCH_IMAGE_LINKS_DATA: FeedResponse = {
         'https://live.staticflickr.com/65535/49612223243_4f9e63713f_m.jpg',
       published: '2020-03-03T07:51:41Z',
       title: ' ',
+      tags: '',
     },
     {
       date_taken: '2020-02-29T16:09:50-08:00',
@@ -60,6 +61,7 @@ export const MOCK_FETCH_IMAGE_LINKS_DATA: FeedResponse = {
         'https://live.staticflickr.com/65535/49612223293_fcbac4a882_m.jpg',
       published: '2020-03-03T07:51:44Z',
       title: '20200229_160950',
+      tags: 'testtag',
     },
   ],
 };

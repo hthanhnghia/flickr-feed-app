@@ -6,8 +6,9 @@ import { AxiosResponse } from 'axios';
 import { of } from 'rxjs';
 import {
   MOCK_FLICKR_API_FEED_DATA,
-  MOCK_FETCH_IMAGE_LINKS_DATA,
+  MOCK_FETCH_IMAGES_DATA,
 } from './../src/images/constants';
+import { FeedResponse } from '../src/images/images.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -19,11 +20,12 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.setGlobalPrefix('/api');
     httpService = moduleFixture.get<HttpService>(HttpService);
     await app.init();
   });
 
-  it('/ (GET) endpoint should return the list of image links', async () => {
+  it('/api/images (GET) endpoint should return the list of image links', async () => {
     const result: AxiosResponse = {
       data: MOCK_FLICKR_API_FEED_DATA,
       status: 200,
@@ -32,13 +34,11 @@ describe('AppController (e2e)', () => {
       config: {},
     };
     jest.spyOn(httpService, 'get').mockImplementationOnce(() => of(result));
-    const expectedAllImageLinks: string = JSON.stringify(
-      MOCK_FETCH_IMAGE_LINKS_DATA,
-    );
+    const expectedAllImagesData: FeedResponse = MOCK_FETCH_IMAGES_DATA;
 
-    const response = await request(app.getHttpServer())
-      .get('/')
+    const response: request.Response = await request(app.getHttpServer())
+      .get('/api/images')
       .expect(200);
-    expect(response.text).toEqual(expectedAllImageLinks);
+    expect(response.body).toStrictEqual(expectedAllImagesData);
   });
 });

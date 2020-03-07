@@ -1,7 +1,8 @@
 import { Test } from '@nestjs/testing';
 import { HttpModule } from '@nestjs/common';
 import { ImagesController } from './images.controller';
-import { ImagesService } from './images.service';
+import { ImagesService, FeedResponse } from './images.service';
+import { MOCK_FETCH_IMAGES_DATA } from './constants';
 
 describe('ImagesController', () => {
   let imagesController: ImagesController;
@@ -19,14 +20,28 @@ describe('ImagesController', () => {
   });
 
   describe('ImagesController: fetch feed images', () => {
-    it('should return an array of image links', async () => {
+    it('should return a feed response in valid format', async () => {
       // Mock the fetchFeedImages() function from ImagesService
-      const result: string[] = ['test_url_1', 'test_url_2'];
+      const result: FeedResponse = MOCK_FETCH_IMAGES_DATA;
       jest
         .spyOn(imagesService, 'fetchFeedImages')
         .mockImplementation(() => Promise.resolve(result));
 
-      expect(await imagesController.fetchFeedImages()).toBe(result);
+      expect(await imagesController.fetchFeedImages({})).toBe(result);
+    });
+  });
+
+  describe('ImagesController: fetch feed images with search query', () => {
+    it('should return a feed response in valid format', async () => {
+      // Mock the fetchFeedImages() function from ImagesService
+      const result: FeedResponse = MOCK_FETCH_IMAGES_DATA;
+      jest
+        .spyOn(imagesService, 'fetchFeedImages')
+        .mockImplementation(() => Promise.resolve(result));
+
+      expect(
+        await imagesController.fetchFeedImages({ search: 'testtag' }),
+      ).toBe(result);
     });
   });
 });
