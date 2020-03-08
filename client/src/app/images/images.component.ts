@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { ImagesService } from './images.service';
 import { Image, ImageResponse } from '../image';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-images',
@@ -10,11 +11,14 @@ import { Image, ImageResponse } from '../image';
 export class ImagesComponent implements OnInit {
   data: Image[] = [];
   isLoadingResults: boolean = true;
+  searchQuery: string = '';
 
-  constructor(private api: ApiService) {}
+  constructor(private route: ActivatedRoute, private api: ImagesService) {}
 
   ngOnInit(): void {
-    this.api.getImages().subscribe(
+    this.searchQuery = this.route.snapshot.queryParamMap.get('search');
+
+    this.api.getImages(this.searchQuery).subscribe(
       (res: any) => {
         this.data = res.value;
         this.isLoadingResults = false;
