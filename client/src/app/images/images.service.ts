@@ -33,7 +33,7 @@ export class ImagesService {
       API_URL +
       (searchQuery && searchQuery != '' ? `?search=${searchQuery}` : '');
     return this.http.get<ImageResponse>(url).pipe(
-      tap(image => console.log(image)),
+      tap(images => {}),
       catchError(this.handleError('getImages', null)),
     );
   }

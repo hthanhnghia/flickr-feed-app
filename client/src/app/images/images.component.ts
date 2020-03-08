@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ImagesComponent implements OnInit {
   data: Image[] = [];
   isLoadingResults: boolean = true;
+  isLoadingError: boolean = false;
   searchQuery: string = '';
 
   constructor(private route: ActivatedRoute, private api: ImagesService) {}
@@ -20,7 +21,12 @@ export class ImagesComponent implements OnInit {
 
     this.api.getImages(this.searchQuery).subscribe(
       (res: any) => {
-        this.data = res.value;
+        if (res) {
+          this.data = res.value;
+          this.isLoadingError = false;
+        } else {
+          this.isLoadingError = true;
+        }
         this.isLoadingResults = false;
       },
       err => {

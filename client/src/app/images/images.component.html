@@ -1,53 +1,61 @@
 <div class="container">
-  <form action="." method="get">
-    <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
-      <div class="input-group">
-        <input
-          id="search"
-          type="search"
-          name="search"
-          placeholder="Search images by tag"
-          aria-describedby="button-search"
-          class="form-control border-0 bg-light"
-        />
-        <div class="input-group-append">
-          <button
-            id="button-search"
-            type="submit"
-            class="btn btn-link text-primary"
-          >
-            <i class="fa fa-search"></i>
-          </button>
+  <div *ngIf="isLoadingError">
+    <h2 class="text-center">
+      Oops! Something went wrong. Please try again in a moment.
+    </h2>
+  </div>
+
+  <div *ngIf="isLoadingError == false">
+    <form action="." method="get">
+      <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+        <div class="input-group">
+          <input
+            id="search"
+            type="search"
+            name="search"
+            placeholder="Search images by tag"
+            aria-describedby="button-search"
+            class="form-control border-0 bg-light"
+          />
+          <div class="input-group-append">
+            <button
+              id="button-search"
+              type="submit"
+              class="btn btn-link text-primary"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
 
-  <div class="container gallery-container-shadow">
-    <div class="loading-shade" *ngIf="isLoadingResults">
-      <div class="d-flex justify-content-center" *ngIf="isLoadingResults">
-        <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
+    <div class="container gallery-container-shadow">
+      <div class="loading-shade" *ngIf="isLoadingResults">
+        <div class="d-flex justify-content-center" *ngIf="isLoadingResults">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="card-columns full-width">
-        <div *ngFor="let item of data">
-          <div class="card image-container bg-light text-dark">
-            <div class="card-body">
-              <div>
-                <a [href]="item.link" target="_blank">
-                  <img
-                    [src]="item.media_url"
-                    class="img-fluid"
-                    alt=""
-                    data-wow-delay="0.1s"
-                  />
-                </a>
+      <div class="row">
+        <div class="card-columns full-width">
+          <div *ngFor="let item of data">
+            <div class="card image-container bg-light text-dark">
+              <div class="card-body">
+                <div>
+                  <a [href]="item.link" target="_blank">
+                    <img
+                      [src]="item.media_url"
+                      class="img-fluid"
+                      alt=""
+                      data-wow-delay="0.1s"
+                    />
+                  </a>
+                </div>
+                <span class="card-text">{{ item.title }}</span>
               </div>
-              <span class="card-text">{{ item.title }}</span>
             </div>
           </div>
         </div>
